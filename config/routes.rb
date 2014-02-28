@@ -1,9 +1,11 @@
 Myapp::Application.routes.draw do
+  get "home/index"
+  root to: 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root :controller => 'static', :action => '/'
+  #root :controller => 'static', :action => '/'
 
 
   # Example of regular route:
