@@ -1,0 +1,14 @@
+<h1>Microblogging Site </h1>
+<div class="flash_message">
+	<%= flash[:error] %>
+</div>
+<%= form_tag("/user/authenticate", :method => :post) do  %>
+	<%= label_tag(:userid, "Login") %>
+	<%= text_field_tag(:userid) %> <br>
+
+	<%= label_tag(:password, "Password") %>
+	<%= password_field_tag(:password) %> <br>
+
+	<%= submit_tag("Sign In") %>
+	<%= link_to "SignUp", user_add_path %>
+<%end %>

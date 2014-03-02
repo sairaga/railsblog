@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :need_login, only: [:index, :show, :new, :edit, :create, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -62,6 +63,14 @@ class PostsController < ApplicationController
   end
 
   private
+  def need_login
+  unless session[:authenticated]
+      flash[:error] = "You must login first..."
+      redirect_to :user_login
+    end 
+  end
+
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])

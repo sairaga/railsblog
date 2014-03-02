@@ -1,4 +1,10 @@
 Myapp::Application.routes.draw do
+  get "user/login"
+  post "user/authenticate"
+  get "user/logout"
+  get "user/add"
+  post "user/insert"
+
   resources :posts
 
   get "home/index"

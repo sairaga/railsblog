@@ -1,0 +1,15 @@
+<h1>Sign up to Microblogging site </h1>
+
+<%= form_for(@addUser, url: '/user/insert') do |f| %>
+	<%= f.label("Enter login id: ") %>
+	<%= f.text_field(:userid,:required =>'true',:pattern =>".{5,8}") %>
+	<br/>
+	<%= f.label("Enter password: ") %>
+	<%= f.password_field(:password,:required =>'true') %>
+	<br/>
+	<%= f.label("Enter full name: ") %>
+	<%= f.text_field  :name,:required =>'true' %>
+	<br/>
+	<%= f.submit("Add") %>
+	<%= link_to "Back", user_login_path %>
+<% end %>
