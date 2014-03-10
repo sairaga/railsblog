@@ -4,10 +4,12 @@ Myapp::Application.routes.draw do
   get "user/logout"
   get "user/add"
   post "user/insert"
+  get "user/edit"
+  patch "user/edited"
 
   resources :posts
 
-  get "home/index"
+  #get "home/index"
   root to: 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

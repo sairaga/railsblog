@@ -6,6 +6,8 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    @puser = session[:userid]
+
   end
 
   # GET /posts/1
@@ -18,6 +20,7 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+
   # GET /posts/1/edit
   def edit
   end
@@ -26,6 +29,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.users_id = session[:userref]
 
     respond_to do |format|
       if @post.save

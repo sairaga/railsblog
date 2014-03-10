@@ -1,0 +1,18 @@
+<h1>Edit profile at Microblogging site</h1>
+<div class="dialog">
+<%= form_for(@userEdit, url: '/user/edited') do |f| %>
+	<br>
+	<%#= f.label("Enter old password: ") %>
+	<%#= f.text_field(:userid,:required =>'true',:pattern =>".{5,8}") %>
+	<!--br/> <br-->
+	<%= f.label("Enter new password: ") %>
+	<%= f.password_field(:password,:required =>'true') %>
+	<br/> <br>
+	<%= f.label("Update full name: ") %>
+	<%= f.text_field  :name,:required =>'true' %>
+	<br/> <br>
+	<%= f.submit("Update") %>
+	<%#= link_to "Back", user_login_path %>
+	<br><br>
+<% end %>
+</div>
