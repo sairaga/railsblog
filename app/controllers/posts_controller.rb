@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :need_login, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+  before_action :need_author, only: [:edit, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -13,7 +14,23 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @puser = session[:userid]
+    @comments = Comment.where(:posts_id => @post.id)
+    @addComment = Comment.new
   end
+
+def commentAdd
+    @c = Comment.new(comment_params)
+    @c.users_id = session[:userref]
+
+    if @c.save
+        flash[:notice] = "Comment added."
+    else  
+        flash[:notice] = "Comment cannot be added"
+    end 
+    redirect_to :posts
+  end
+
 
   # GET /posts/new
   def new
@@ -74,6 +91,13 @@ class PostsController < ApplicationController
     end 
   end
 
+  def need_author
+  unless session[:userref] == @post.users_id
+      flash[:error] = "You cannot operate on this users post..."
+      redirect_to :posts
+    end 
+  end  
+
 
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -84,4 +108,10 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body)
     end
+
+    def comment_params
+      params.require(:comment).permit(:content, :posts_id)
+    end  
+
+
 end

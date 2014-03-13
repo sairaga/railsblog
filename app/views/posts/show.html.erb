@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Author:</strong>
+  <%= @post.users.userid %>
+</p>
+
+<p>
   <strong>Title:</strong>
   <%= @post.title %>
 </p>
@@ -10,6 +15,36 @@
   <%= @post.body %>
 </p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<p>
+	<strong> Comments: </strong>
+	<table>
+		  <thead>
+		    <tr>
+		      <th>Content</th>
+		      <th>User</th>
+		    </tr>
+		  </thead>
+
+	  <tbody>
+		 <% @comments.each do |comment| %>
+	      <tr>
+	        <td><%= comment.content %></td>
+	        <td><%= comment.users.name %></td>
+	      </tr>
+	     <% end %> 
+	   </tbody>
+  </table>   
+</p>
+
+<% if (@post.users.userid == @puser) %>
+	<%= link_to 'Edit', edit_post_path(@post) %> 
+<% end %>	
+<%= form_for(@addComment, url: '/posts/commentAdd') do |f| %>
+	<%= f.label("Comment: ") %>
+	<%= f.text_field(:content) %>
+	<%= f.hidden_field(:posts_id, :value => @post.id) %>
+	<%#= f.input :title, :as => :hidden, :input_html => { :post_id => "#{@post.id}" } %>
+	<%= f.submit("Add Comment") %>
+<% end %> 
 <%= link_to 'Back', posts_path %>
 <%#= link_to "Logout", :user_logout %>

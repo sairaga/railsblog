@@ -6,6 +6,7 @@ Myapp::Application.routes.draw do
   post "user/insert"
   get "user/edit"
   patch "user/edited"
+  post "posts/commentAdd"
 
   resources :posts
 
