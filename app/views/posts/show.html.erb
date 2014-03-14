@@ -13,10 +13,16 @@
 <p>
   <strong>Body:</strong>
   <%= @post.body %>
+  <br>
+  <% if (@post.users.userid == @puser) %>
+	<%= link_to 'Edit Post', edit_post_path(@post) %> 
+<% end %>
 </p>
+
 
 <p>
 	<strong> Comments: </strong>
+	<% if @post.comments.size > 0 %>
 	<table>
 		  <thead>
 		    <tr>
@@ -29,20 +35,20 @@
 		 <% @comments.each do |comment| %>
 	      <tr>
 	        <td><%= comment.content %></td>
-	        <td><%= comment.users.name %></td>
+	        <td><%= comment.user.name %></td>
 	      </tr>
 	     <% end %> 
 	   </tbody>
-  </table>   
+  	</table>   
+  	<% end %>
 </p>
 
-<% if (@post.users.userid == @puser) %>
-	<%= link_to 'Edit', edit_post_path(@post) %> 
-<% end %>	
+	
 <%= form_for(@addComment, url: '/posts/commentAdd') do |f| %>
 	<%= f.label("Comment: ") %>
 	<%= f.text_field(:content) %>
-	<%= f.hidden_field(:posts_id, :value => @post.id) %>
+	<%= f.hidden_field(:post_id, :value => @post.id) %>
+	<%#= hidden_field_tag(:comment_count, @post.comment_count) %>
 	<%#= f.input :title, :as => :hidden, :input_html => { :post_id => "#{@post.id}" } %>
 	<%= f.submit("Add Comment") %>
 <% end %> 

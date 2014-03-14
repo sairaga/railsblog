@@ -1,3 +1,4 @@
 class Comment < ActiveRecord::Base
-	belongs_to :users, :class_name => "User"
+  belongs_to :post
+  belongs_to :user
 end

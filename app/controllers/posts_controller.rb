@@ -8,27 +8,34 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
     @puser = session[:userid]
-
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
     @puser = session[:userid]
-    @comments = Comment.where(:posts_id => @post.id)
+    @comments = Comment.where(:post_id => @post.id)
     @addComment = Comment.new
   end
 
 def commentAdd
     @c = Comment.new(comment_params)
-    @c.users_id = session[:userref]
+    @c.user_id = session[:userref]
+    @post = Post.find(@c.post_id)
+    #@post.comment_count = comment_count.to_i + 1   
 
     if @c.save
         flash[:notice] = "Comment added."
     else  
         flash[:notice] = "Comment cannot be added"
     end 
-    redirect_to :posts
+    #if @post.save
+    #    flash[:notice] = "Comment added."
+    #else  
+    #    flash[:notice] = "Comment cannot be added"
+    #end 
+
+    redirect_to "/posts/#{@post.id}"
   end
 
 
@@ -47,6 +54,7 @@ def commentAdd
   def create
     @post = Post.new(post_params)
     @post.users_id = session[:userref]
+    #@post.comment_count = 0
 
     respond_to do |format|
       if @post.save
@@ -76,6 +84,7 @@ def commentAdd
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
+    @post.comments.destroy_all
     @post.destroy
     respond_to do |format|
       format.html { redirect_to posts_url }
@@ -110,8 +119,11 @@ def commentAdd
     end
 
     def comment_params
-      params.require(:comment).permit(:content, :posts_id)
+      params.require(:comment).permit(:content, :post_id)
     end  
 
+    #def comment_count
+    #  params.require(:comment_count)
+    #end  
 
 end

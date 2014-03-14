@@ -6,6 +6,7 @@
       <th>Title</th>
       <th>Body</th>
       <th>Author</th>
+      <th>Comment Count</th>
       <th>Show</th>
       <th>Edit</th>
       <th>Destroy</th>
@@ -18,6 +19,7 @@
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= post.users.name %></td>
+        <td><%= post.comments.size %></td>
         <td><%= link_to 'Show', post %></td>
         <% if (post.users.userid == @puser) %>
           <td><%= link_to 'Edit', edit_post_path(post) %></td>
@@ -26,8 +28,6 @@
           <td> </td>
           <td> </td>
         <% end %>
-
-        
       </tr>
     <% end %>
   </tbody>
